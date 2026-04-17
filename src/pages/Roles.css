@@ -1,0 +1,137 @@
+/* ═══════════════════════════════════════════════
+   Roles Page
+   ═══════════════════════════════════════════════ */
+
+.roles-page {
+  animation: fadeIn 0.3s ease;
+}
+
+.roles-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.roles-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.roles-header h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.roles-header .subtitle {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.roles-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ── Role Item ── */
+.role-item {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+}
+
+.role-item:hover {
+  border-color: var(--text-muted);
+}
+
+.role-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.role-item-header:hover {
+  background: var(--bg-elevated);
+}
+
+.role-item-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.role-item-description {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+}
+
+.role-item-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.role-item-chevron {
+  transition: transform 0.2s ease;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.role-item-chevron.expanded {
+  transform: rotate(180deg);
+}
+
+/* ── Expanded Content ── */
+.role-item-content {
+  padding: 0 20px 20px;
+  border-top: 1px solid var(--border);
+  animation: slideDown 0.2s ease;
+}
+
+.role-item-services {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.role-service-tag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: var(--bg-base);
+  border: 1px solid var(--border);
+  font-size: 0.8rem;
+  color: var(--text-primary);
+}
+
+.role-service-tag .tag-endpoint {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 500px;
+  }
+}

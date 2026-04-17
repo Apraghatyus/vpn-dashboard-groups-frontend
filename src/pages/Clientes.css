@@ -1,0 +1,138 @@
+/* ═══════════════════════════════════════════════
+   Clientes Page
+   ═══════════════════════════════════════════════ */
+
+.clientes {
+  animation: fadeIn 0.3s ease;
+}
+
+.clientes-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.clientes-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px;
+}
+
+.clientes-header h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.clientes-header .subtitle {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+/* ── Table ── */
+.clientes-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.clientes-table thead th {
+  padding: 12px 24px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-base);
+}
+
+.clientes-table tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s ease;
+}
+
+.clientes-table tbody tr:hover {
+  background: var(--bg-elevated);
+}
+
+.clientes-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.clientes-table tbody td {
+  padding: 16px 24px;
+  font-size: 0.88rem;
+}
+
+/* ── Peer cell ── */
+.peer-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.peer-cell-avatar {
+  position: relative;
+}
+
+.peer-cell-avatar .status-dot {
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--bg-surface);
+}
+
+.peer-cell-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.peer-cell-name {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.peer-cell-username {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.peer-ip {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.peer-rules {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.peer-time {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.peer-delete {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.peer-delete:hover {
+  color: #ef4444;
+  background: #ef444418;
+}

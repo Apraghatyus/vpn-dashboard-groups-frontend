@@ -1,0 +1,56 @@
+import { useSearch } from '../../hooks/useSearch';
+import './Header.css';
+
+interface HeaderProps {
+  title: string;
+  subtitle: string;
+}
+
+export function Header({ title, subtitle }: HeaderProps) {
+  const { searchQuery, setSearch } = useSearch();
+
+  return (
+    <header className="header">
+      <div className="header-left">
+        <div className="header-title">
+          <h1>
+            {title}
+            <span className="header-branch">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="6" y1="3" x2="6" y2="15" />
+                <circle cx="18" cy="6" r="3" />
+                <circle cx="6" cy="18" r="3" />
+                <path d="M18 9a9 9 0 0 1-9 9" />
+              </svg>
+              main
+            </span>
+          </h1>
+          <p>{subtitle}</p>
+        </div>
+      </div>
+
+      <div className="header-right">
+        <div className="header-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg>
+          <input
+            type="text"
+            placeholder="Buscar..."
+            value={searchQuery}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <span className="header-search-shortcut">⌘K</span>
+        </div>
+
+        <button className="header-sync">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+          Sincronizado
+        </button>
+      </div>
+    </header>
+  );
+}

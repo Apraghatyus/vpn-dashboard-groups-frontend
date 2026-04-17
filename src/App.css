@@ -1,0 +1,200 @@
+/* ═══════════════════════════════════════════════════════════
+   WG-ACL Manager — Design System
+   Lovable-inspired warm dark theme using oklch
+   ═══════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ── Design Tokens (oklch — from Lovable) ── */
+:root {
+  --radius: 0.5rem;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* Surfaces (background layers) */
+  --surface-0: oklch(0.14 0.01 60);
+  --surface-1: oklch(0.18 0.012 60);
+  --surface-2: oklch(0.22 0.013 60);
+  --surface-3: oklch(0.27 0.015 60);
+
+  /* Semantic colors */
+  --background: oklch(0.16 0.012 60);
+  --foreground: oklch(0.96 0.01 80);
+  --card: oklch(0.19 0.013 60);
+  --card-foreground: oklch(0.96 0.01 80);
+  --muted: oklch(0.22 0.012 60);
+  --muted-foreground: oklch(0.65 0.018 70);
+  --border: oklch(0.27 0.014 60);
+  --input: oklch(0.24 0.014 60);
+
+  /* Accent / Primary */
+  --primary: oklch(0.78 0.16 65);
+  --primary-foreground: oklch(0.18 0.02 60);
+  --accent: oklch(0.27 0.018 60);
+  --accent-foreground: oklch(0.96 0.01 80);
+  --ring: oklch(0.78 0.16 65);
+
+  /* Ops palette */
+  --amber: oklch(0.78 0.16 65);
+  --amber-glow: oklch(0.85 0.18 75);
+  --danger: oklch(0.65 0.22 25);
+  --success: oklch(0.72 0.16 155);
+  --info: oklch(0.72 0.13 220);
+  --violet: oklch(0.68 0.18 295);
+
+  /* Gradients & shadows */
+  --gradient-amber: linear-gradient(135deg, oklch(0.78 0.16 65), oklch(0.65 0.22 25));
+  --gradient-glow: radial-gradient(circle at 50% 0%, oklch(0.78 0.16 65 / 0.18), transparent 60%);
+  --shadow-elegant: 0 10px 40px -12px oklch(0 0 0 / 0.6), 0 0 0 1px oklch(1 0 0 / 0.04);
+  --shadow-glow: 0 0 30px -8px oklch(0.78 0.16 65 / 0.4);
+
+  /* Legacy aliases (for existing components) */
+  --bg-base: var(--surface-0);
+  --bg-surface: var(--surface-1);
+  --bg-elevated: var(--surface-2);
+  --text-primary: var(--foreground);
+  --text-secondary: oklch(0.75 0.015 70);
+  --text-muted: var(--muted-foreground);
+  --sidebar-width: 220px;
+
+  /* Fonts */
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+/* ── Reset ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11', 'ss01';
+  background: var(--surface-0);
+  color: var(--foreground);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── Layout ── */
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.app-main {
+  flex: 1;
+  margin-left: var(--sidebar-width);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-content {
+  padding: 24px 32px;
+  flex: 1;
+}
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--amber);
+  color: var(--primary-foreground);
+  border-color: var(--amber);
+}
+
+.btn-primary:hover {
+  background: var(--amber-glow);
+  border-color: var(--amber-glow);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border-color: var(--border);
+}
+
+.btn-ghost:hover {
+  color: var(--foreground);
+  background: var(--surface-2);
+}
+
+.btn-danger {
+  background: var(--danger);
+  color: #fff;
+  border-color: var(--danger);
+}
+
+.btn-danger:hover {
+  filter: brightness(0.9);
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--surface-3);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-foreground);
+}
+
+/* ── Selection ── */
+::selection {
+  background: var(--amber);
+  color: var(--primary-foreground);
+}
+
+/* ── Animations ── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

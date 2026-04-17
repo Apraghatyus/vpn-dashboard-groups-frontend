@@ -1,0 +1,323 @@
+/* ═══════════════════════════════════════════════
+   Login Screen — Lovable-inspired
+   ═══════════════════════════════════════════════ */
+
+.login-screen {
+  position: relative;
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-0);
+  padding: 40px 16px;
+  overflow: hidden;
+}
+
+/* ── Background glow ── */
+.login-glow {
+  position: absolute;
+  inset: 0;
+  top: 0;
+  height: 60vh;
+  background: radial-gradient(circle at 50% 0%, oklch(0.78 0.16 65 / 0.18), transparent 60%);
+  pointer-events: none;
+}
+
+.login-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, white 1px, transparent 1px),
+    linear-gradient(to bottom, white 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+}
+
+/* ── Container ── */
+.login-container {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  animation: fadeIn 0.3s ease;
+}
+
+/* ── Brand ── */
+.login-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.login-logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--gradient-amber);
+  box-shadow: var(--shadow-glow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.login-logo svg {
+  width: 24px;
+  height: 24px;
+  color: var(--primary-foreground);
+  stroke-width: 2.5;
+}
+
+.login-brand h1 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+  margin: 0;
+}
+
+.login-brand p {
+  font-size: 12px;
+  color: var(--muted-foreground);
+  margin: 4px 0 0 0;
+}
+
+/* ── Card ── */
+.login-card {
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--surface-1);
+  box-shadow: var(--shadow-elegant);
+  overflow: hidden;
+}
+
+.login-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border);
+  background: oklch(0.22 0.013 60 / 0.4);
+}
+
+.login-card-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--foreground);
+  letter-spacing: -0.01em;
+}
+
+.login-card-header-left svg {
+  width: 14px;
+  height: 14px;
+  color: var(--amber);
+}
+
+.login-card-header-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-family: var(--font-mono);
+  color: var(--muted-foreground);
+}
+
+.login-tunnel-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--success);
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* ── Form body ── */
+.login-form-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.login-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.login-field label {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted-foreground);
+}
+
+.login-input-wrapper {
+  position: relative;
+}
+
+.login-input-wrapper svg {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  color: var(--muted-foreground);
+  pointer-events: none;
+}
+
+.login-input {
+  width: 100%;
+  padding: 10px 14px 10px 36px;
+  font-size: 14px;
+  font-family: var(--font-mono);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--foreground);
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.login-input:focus {
+  border-color: oklch(0.78 0.16 65 / 0.5);
+  box-shadow: 0 0 0 3px oklch(0.78 0.16 65 / 0.15);
+}
+
+.login-input::placeholder {
+  color: var(--muted-foreground);
+  opacity: 0.6;
+}
+
+/* ── Error ── */
+.login-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid oklch(0.65 0.22 25 / 0.3);
+  background: oklch(0.65 0.22 25 / 0.1);
+  color: var(--danger);
+  font-size: 12px;
+  animation: fadeIn 0.2s ease;
+}
+
+.login-error svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ── Submit button ── */
+.login-submit {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  background: var(--gradient-amber);
+  color: var(--primary-foreground);
+  font-size: 14px;
+  font-weight: 500;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  box-shadow: var(--shadow-glow);
+  transition: opacity 0.2s ease;
+}
+
+.login-submit:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.login-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.login-submit svg {
+  width: 14px;
+  height: 14px;
+}
+
+.login-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ── Demo footer ── */
+.login-demo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  border-top: 1px solid var(--border);
+  background: oklch(0.22 0.013 60 / 0.3);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.login-demo:hover {
+  background: oklch(0.22 0.013 60 / 0.5);
+}
+
+.login-demo-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  color: var(--muted-foreground);
+}
+
+.login-demo-left svg {
+  width: 12px;
+  height: 12px;
+}
+
+.login-demo-left .demo-cred {
+  color: var(--amber);
+}
+
+.login-demo-right {
+  font-size: 10px;
+  color: var(--muted-foreground);
+  transition: color 0.15s ease;
+}
+
+.login-demo:hover .login-demo-right {
+  color: var(--foreground);
+}
+
+/* ── Footer ── */
+.login-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 24px;
+  font-size: 10px;
+  font-family: var(--font-mono);
+  color: var(--muted-foreground);
+}
+
+/* ── Animations ── */
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}

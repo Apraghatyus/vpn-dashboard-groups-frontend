@@ -1,0 +1,439 @@
+/* ═══════════════════════════════════════════════
+   Overview Page — Lovable-inspired layout
+   ═══════════════════════════════════════════════ */
+
+.overview {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  animation: fadeIn 0.3s ease;
+}
+
+/* ═══════════════════════════════════════
+   Stat Cards Row
+   ═══════════════════════════════════════ */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.stat-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: var(--surface-1);
+  box-shadow: inset 0 0 0 1px oklch(1 0 0 / 0.04);
+  padding: 16px;
+  transition: border-color 0.2s ease;
+}
+
+.stat-card:hover {
+  border-color: oklch(1 0 0 / 0.15);
+}
+
+/* Glow blob in top-right */
+.stat-card::before {
+  content: '';
+  position: absolute;
+  right: -32px;
+  top: -32px;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  opacity: 0.10;
+  filter: blur(24px);
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.stat-card:hover::before {
+  opacity: 0.20;
+}
+
+.stat-card.tone-amber::before  { background: var(--amber); }
+.stat-card.tone-info::before   { background: var(--info); }
+.stat-card.tone-success::before{ background: var(--success); }
+.stat-card.tone-violet::before { background: var(--violet); }
+
+.stat-card-inner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  position: relative;
+}
+
+.stat-card-label {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted-foreground);
+}
+
+.stat-card-value {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 6px;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--foreground);
+}
+
+.stat-card-hint {
+  font-size: 11px;
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+  margin-top: 2px;
+}
+
+.stat-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.stat-card-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Icon tone variants */
+.stat-card-icon.tone-amber {
+  background: oklch(0.78 0.16 65 / 0.12);
+  border: 1px solid oklch(0.78 0.16 65 / 0.25);
+  color: var(--amber);
+}
+.stat-card-icon.tone-info {
+  background: oklch(0.72 0.13 220 / 0.12);
+  border: 1px solid oklch(0.72 0.13 220 / 0.25);
+  color: var(--info);
+}
+.stat-card-icon.tone-success {
+  background: oklch(0.72 0.16 155 / 0.12);
+  border: 1px solid oklch(0.72 0.16 155 / 0.25);
+  color: var(--success);
+}
+.stat-card-icon.tone-violet {
+  background: oklch(0.68 0.18 295 / 0.12);
+  border: 1px solid oklch(0.68 0.18 295 / 0.25);
+  color: var(--violet);
+}
+
+/* ═══════════════════════════════════════
+   Middle Row: Peers + Categories
+   ═══════════════════════════════════════ */
+.overview-mid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 12px;
+}
+
+/* ── Card base (shared) ── */
+.ov-card {
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: var(--surface-1);
+  box-shadow: inset 0 0 0 1px oklch(1 0 0 / 0.04);
+  overflow: hidden;
+}
+
+.ov-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.ov-card-header h3 {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--foreground);
+  margin: 0;
+}
+
+.ov-card-header p {
+  font-size: 11px;
+  color: var(--muted-foreground);
+  margin: 1px 0 0 0;
+}
+
+.ov-card-header-link {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--muted-foreground);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.ov-card-header-link:hover {
+  color: var(--foreground);
+}
+
+.ov-card-header-link svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* ── Peers list ── */
+.ov-peers-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.ov-peer-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s ease;
+}
+
+.ov-peer-row:last-child {
+  border-bottom: none;
+}
+
+.ov-peer-row:hover {
+  background: oklch(0.22 0.013 60 / 0.4);
+}
+
+.ov-peer-avatar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: var(--surface-2);
+  box-shadow: inset 0 0 0 1px oklch(1 0 0 / 0.04);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--foreground);
+  flex-shrink: 0;
+}
+
+.ov-peer-status {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 2px solid var(--surface-1);
+}
+
+.ov-peer-status.online {
+  background: var(--success);
+}
+
+.ov-peer-status.offline {
+  background: var(--muted-foreground);
+}
+
+.ov-peer-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.ov-peer-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--foreground);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ov-peer-username {
+  font-size: 10px;
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+}
+
+.ov-peer-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.ov-peer-ip {
+  font-size: 11px;
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.ov-peer-time {
+  font-size: 10px;
+  color: var(--muted-foreground);
+  min-width: 32px;
+  text-align: right;
+}
+
+/* ── Services by category ── */
+.ov-categories {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ov-cat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ov-cat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ov-cat-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--foreground);
+}
+
+.ov-cat-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ov-cat-dot svg {
+  width: 10px;
+  height: 10px;
+}
+
+.ov-cat-count {
+  font-size: 11px;
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.ov-cat-bar {
+  height: 4px;
+  border-radius: 9999px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.ov-cat-bar-fill {
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ═══════════════════════════════════════
+   Bottom: Role distribution
+   ═══════════════════════════════════════ */
+.ov-distribution-grid {
+  padding: 16px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.ov-dist-card {
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  box-shadow: inset 0 0 0 1px oklch(1 0 0 / 0.04);
+  padding: 12px;
+}
+
+.ov-dist-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.ov-dist-peers {
+  font-size: 10px;
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+}
+
+.ov-dist-value {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 2px;
+}
+
+.ov-dist-value .big {
+  font-size: 1.25rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--foreground);
+}
+
+.ov-dist-value .total {
+  font-size: 11px;
+  color: var(--muted-foreground);
+}
+
+.ov-dist-bar {
+  height: 4px;
+  border-radius: 9999px;
+  background: var(--bg-base, var(--surface-0));
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.ov-dist-bar-fill {
+  height: 100%;
+  border-radius: 9999px;
+}
+
+/* ── Role chip (shared across Overview) ── */
+.role-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  font-size: 10px;
+  font-weight: 500;
+  border: 1px solid;
+  white-space: nowrap;
+}
+
+.role-chip .chip-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+/* ═══════ Responsive ═══════ */
+@media (max-width: 1024px) {
+  .stat-grid { grid-template-columns: repeat(2, 1fr); }
+  .overview-mid { grid-template-columns: 1fr; }
+  .ov-distribution-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .stat-grid { grid-template-columns: 1fr; }
+  .ov-distribution-grid { grid-template-columns: 1fr; }
+}

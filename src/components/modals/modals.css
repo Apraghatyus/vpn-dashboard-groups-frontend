@@ -1,0 +1,14 @@
+/* ═══════════════════════════════════════════════
+   Modals
+   ═══════════════════════════════════════════════ */
+
+.confirm-modal-text {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.confirm-modal-name {
+  color: var(--text-primary);
+  font-weight: 600;
+}

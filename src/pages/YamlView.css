@@ -1,0 +1,101 @@
+/* ═══════════════════════════════════════════════
+   YAML View Page
+   ═══════════════════════════════════════════════ */
+
+.yaml-page {
+  animation: fadeIn 0.3s ease;
+}
+
+.yaml-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.yaml-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.yaml-filename {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+}
+
+.yaml-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.yaml-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.15s ease;
+}
+
+.yaml-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+  background: var(--bg-elevated);
+}
+
+.yaml-btn.copied {
+  color: #22c55e;
+  border-color: #22c55e40;
+  background: #22c55e12;
+}
+
+.yaml-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* ── Code block ── */
+.yaml-code {
+  padding: 24px;
+  overflow-x: auto;
+}
+
+.yaml-code pre {
+  margin: 0;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 0.82rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  white-space: pre;
+}
+
+/* Manual syntax highlight */
+.yaml-comment {
+  color: #57534e;
+}
+
+.yaml-key {
+  color: var(--text-primary);
+}
+
+.yaml-string {
+  color: #f59e0b;
+}
+
+.yaml-value {
+  color: #22c55e;
+}
+
+.yaml-indent {
+  color: var(--text-muted);
+}
