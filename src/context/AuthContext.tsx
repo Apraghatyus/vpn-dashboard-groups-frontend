@@ -59,6 +59,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const isAuthenticated = !!user && !!token;
 
+  // Verify stored token is still valid on mount
+  useEffect(() => {
+    if (!token) return;
+    fetch('/api/auth/me', { headers: { Authorization: `Bearer ${token}` } })
+      .then((res) => { if (!res.ok) { setUser(null); setToken(null); } })
+      .catch(() => { /* network error — keep current state */ });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   // Persist auth state
   useEffect(() => {
     if (user && token) {

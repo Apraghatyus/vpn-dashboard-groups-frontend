@@ -97,7 +97,7 @@ export function Clientes() {
       <ConfirmModal
         isOpen={!!deletePeer}
         onClose={() => setDeletePeer(null)}
-        onConfirm={() => deletePeer && removePeer(deletePeer.id)}
+        onConfirm={() => { if (deletePeer) return removePeer(deletePeer.id); }}
         title="Eliminar peer"
         message="¿Estás seguro de que deseas eliminar el peer"
         itemName={deletePeer?.name + '?'}

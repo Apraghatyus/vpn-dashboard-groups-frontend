@@ -5,7 +5,7 @@ import { useRoles } from '../../hooks/useRoles';
 interface AddPeerModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (data: { displayName: string; username: string; ip: string; roleId: string }) => void;
+  onSubmit: (data: { displayName: string; username: string; ip: string; roleId: string }) => Promise<void>;
 }
 
 export function AddPeerModal({ isOpen, onClose, onSubmit }: AddPeerModalProps) {
@@ -15,9 +15,9 @@ export function AddPeerModal({ isOpen, onClose, onSubmit }: AddPeerModalProps) {
   const [ip, setIp] = useState('');
   const [roleId, setRoleId] = useState(roles[0]?.id ?? '');
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!displayName.trim() || !username.trim() || !ip.trim()) return;
-    onSubmit({ displayName: displayName.trim(), username: username.trim(), ip: ip.trim(), roleId });
+    await onSubmit({ displayName: displayName.trim(), username: username.trim(), ip: ip.trim(), roleId });
     setDisplayName('');
     setUsername('');
     setIp('');

@@ -1,19 +1,23 @@
 import { useCallback, useMemo } from 'react';
 import { useAppContext } from '../context/AppContext';
-import type { NewRoleDTO } from '../models';
+import type { IRole, NewRoleDTO } from '../models';
+import { apiFetch } from '../lib/api';
 
 export function useRoles() {
   const { state, dispatch } = useAppContext();
 
-  const addRole = useCallback(
-    (dto: NewRoleDTO) => dispatch({ type: 'ADD_ROLE', payload: dto }),
-    [dispatch]
-  );
+  const addRole = useCallback(async (dto: NewRoleDTO): Promise<void> => {
+    const role = await apiFetch<IRole>('/api/roles', {
+      method: 'POST',
+      body: JSON.stringify(dto),
+    });
+    dispatch({ type: 'ADD_ROLE_RESPONSE', payload: role });
+  }, [dispatch]);
 
-  const removeRole = useCallback(
-    (roleId: string) => dispatch({ type: 'REMOVE_ROLE', payload: roleId }),
-    [dispatch]
-  );
+  const removeRole = useCallback(async (roleId: string): Promise<void> => {
+    await apiFetch<unknown>(`/api/roles/${roleId}`, { method: 'DELETE' });
+    dispatch({ type: 'REMOVE_ROLE', payload: roleId });
+  }, [dispatch]);
 
   const getRoleColor = useCallback(
     (roleId: string) => state.roles.find((r) => r.id === roleId)?.color ?? '#a8a29e',

@@ -4,7 +4,7 @@ import './modals.css';
 interface ConfirmModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onConfirm: () => void;
+  onConfirm: () => void | Promise<void>;
   title: string;
   message: string;
   itemName?: string;
@@ -22,8 +22,8 @@ export function ConfirmModal({
   confirmLabel = 'Confirmar',
   danger = false,
 }: ConfirmModalProps) {
-  const handleConfirm = () => {
-    onConfirm();
+  const handleConfirm = async () => {
+    await onConfirm();
     onClose();
   };
 

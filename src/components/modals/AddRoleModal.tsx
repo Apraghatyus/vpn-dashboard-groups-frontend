@@ -9,7 +9,7 @@ const COLOR_PRESETS = [
 interface AddRoleModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (data: { id: string; displayName: string; description: string; color: string }) => void;
+  onSubmit: (data: { id: string; displayName: string; description: string; color: string }) => Promise<void>;
 }
 
 export function AddRoleModal({ isOpen, onClose, onSubmit }: AddRoleModalProps) {
@@ -17,10 +17,10 @@ export function AddRoleModal({ isOpen, onClose, onSubmit }: AddRoleModalProps) {
   const [description, setDescription] = useState('');
   const [color, setColor] = useState(COLOR_PRESETS[0]);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!name.trim()) return;
     const id = name.trim().toLowerCase().replace(/\s+/g, '_');
-    onSubmit({ id, displayName: name.trim(), description: description.trim(), color });
+    await onSubmit({ id, displayName: name.trim(), description: description.trim(), color });
     setName('');
     setDescription('');
     setColor(COLOR_PRESETS[0]);

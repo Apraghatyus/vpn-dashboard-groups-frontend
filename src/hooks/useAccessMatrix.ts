@@ -1,5 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import { useAppContext } from '../context/AppContext';
+import type { IAccessEntry } from '../models';
+import { apiFetch } from '../lib/api';
 
 export function useAccessMatrix() {
   const { state, dispatch } = useAppContext();
@@ -13,8 +15,13 @@ export function useAccessMatrix() {
   );
 
   const toggleAccess = useCallback(
-    (roleId: string, serviceId: string) =>
-      dispatch({ type: 'TOGGLE_ACCESS', payload: { roleId, serviceId } }),
+    async (roleId: string, serviceId: string): Promise<void> => {
+      const matrix = await apiFetch<IAccessEntry[]>('/api/access/toggle', {
+        method: 'POST',
+        body: JSON.stringify({ roleId, serviceId }),
+      });
+      dispatch({ type: 'SET_ACCESS_MATRIX', payload: matrix });
+    },
     [dispatch]
   );
 

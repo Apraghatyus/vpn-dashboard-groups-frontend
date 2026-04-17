@@ -1,25 +1,32 @@
 import { useCallback, useMemo } from 'react';
 import { useAppContext } from '../context/AppContext';
-import type { NewPeerDTO } from '../models';
+import type { IPeer, NewPeerDTO } from '../models';
+import { apiFetch } from '../lib/api';
 
 export function usePeers() {
   const { state, dispatch } = useAppContext();
 
-  const addPeer = useCallback(
-    (dto: NewPeerDTO) => dispatch({ type: 'ADD_PEER', payload: dto }),
-    [dispatch]
-  );
+  const addPeer = useCallback(async (dto: NewPeerDTO): Promise<void> => {
+    const peer = await apiFetch<IPeer>('/api/peers', {
+      method: 'POST',
+      body: JSON.stringify(dto),
+    });
+    dispatch({ type: 'ADD_PEER_RESPONSE', payload: peer });
+  }, [dispatch]);
 
-  const removePeer = useCallback(
-    (peerId: string) => dispatch({ type: 'REMOVE_PEER', payload: peerId }),
-    [dispatch]
-  );
+  const removePeer = useCallback(async (peerId: string): Promise<void> => {
+    await apiFetch<unknown>(`/api/peers/${peerId}`, { method: 'DELETE' });
+    dispatch({ type: 'REMOVE_PEER', payload: peerId });
+  }, [dispatch]);
 
-  const updatePeerRole = useCallback(
-    (peerId: string, roleId: string) =>
-      dispatch({ type: 'UPDATE_PEER_ROLE', payload: { peerId, roleId } }),
-    [dispatch]
-  );
+  const updatePeerRole = useCallback(async (peerId: string, roleId: string): Promise<void> => {
+    // Optimistic update so the dropdown doesn't snap back
+    dispatch({ type: 'UPDATE_PEER_ROLE', payload: { peerId, roleId } });
+    await apiFetch<IPeer>(`/api/peers/${peerId}/role`, {
+      method: 'PUT',
+      body: JSON.stringify({ roleId }),
+    });
+  }, [dispatch]);
 
   const onlineCount = useMemo(
     () => state.peers.filter((p) => p.status === 'online').length,
