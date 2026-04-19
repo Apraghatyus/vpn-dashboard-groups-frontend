@@ -40,6 +40,21 @@ async function copyToClipboard(): Promise<boolean> {
   }
 }
 
+async function sync(token: string): Promise<boolean> {
+  try {
+    const res = await fetch('/api/yaml/sync', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
 function download(filename: string = 'wg-acl.yaml'): void {
   const content = generate();
   const blob = new Blob([content], { type: 'text/yaml' });
@@ -55,4 +70,5 @@ export const yamlService = {
   generate,
   copyToClipboard,
   download,
+  sync,
 };

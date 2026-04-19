@@ -1,4 +1,6 @@
+import { useState, useCallback } from 'react';
 import { useSearch } from '../../hooks/useSearch';
+import { useAuth } from '../../context/AuthContext';
 import './Header.css';
 
 interface HeaderProps {
@@ -8,6 +10,23 @@ interface HeaderProps {
 
 export function Header({ title, subtitle }: HeaderProps) {
   const { searchQuery, setSearch } = useSearch();
+  const { token } = useAuth();
+  const [syncState, setSyncState] = useState<'idle' | 'syncing' | 'done' | 'error'>('idle');
+
+  const handleSync = useCallback(async () => {
+    if (!token || syncState === 'syncing') return;
+    setSyncState('syncing');
+    try {
+      const res = await fetch('/api/yaml/sync', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}` },
+      });
+      setSyncState(res.ok ? 'done' : 'error');
+    } catch {
+      setSyncState('error');
+    }
+    setTimeout(() => setSyncState('idle'), 3000);
+  }, [token, syncState]);
 
   return (
     <header className="header">
@@ -28,7 +47,6 @@ export function Header({ title, subtitle }: HeaderProps) {
           <p>{subtitle}</p>
         </div>
       </div>
-
       <div className="header-right">
         <div className="header-search">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -43,12 +61,25 @@ export function Header({ title, subtitle }: HeaderProps) {
           />
           <span className="header-search-shortcut">⌘K</span>
         </div>
-
-        <button className="header-sync">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="20 6 9 17 4 12" />
-          </svg>
-          Sincronizado
+        <button
+          className={`header-sync ${syncState}`}
+          onClick={handleSync}
+          disabled={syncState === 'syncing'}
+        >
+          {syncState === 'syncing' ? (
+            <>⟳ Aplicando...</>
+          ) : syncState === 'done' ? (
+            <>✓ ACL Aplicada</>
+          ) : syncState === 'error' ? (
+            <>✕ Error</>
+          ) : (
+            <>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              Sincronizar
+            </>
+          )}
         </button>
       </div>
     </header>
