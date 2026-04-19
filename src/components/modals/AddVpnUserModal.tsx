@@ -23,11 +23,15 @@ export function AddVpnUserModal({ isOpen, onClose, onSubmit }: AddVpnUserModalPr
 
   const handleSubmit = async () => {
     if (!canSubmit) return;
-    await onSubmit({ displayName: displayName.trim(), email: email.trim(), roleId });
-    setDisplayName('');
-    setEmail('');
-    setRoleId(roles[0]?.id ?? '');
-    onClose();
+    try {
+      await onSubmit({ displayName: displayName.trim(), email: email.trim(), roleId });
+      setDisplayName('');
+      setEmail('');
+      setRoleId(roles[0]?.id ?? '');
+      onClose();
+    } catch (error) {
+      console.error('Error al crear usuario:', error);
+    }
   };
 
   return (
