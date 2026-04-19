@@ -6,14 +6,18 @@ import { Avatar } from '../components/ui/Avatar';
 import { StatusDot } from '../components/ui/StatusDot';
 import { RoleDropdown } from '../components/ui/RoleDropdown';
 import { AddPeerModal } from '../components/modals/AddPeerModal';
+import { EditPeerModal } from '../components/modals/EditPeerModal';
 import { ConfirmModal } from '../components/modals/ConfirmModal';
+import type { IPeer } from '../models';
 import './Clientes.css';
 
 export function Clientes() {
-  const { filteredPeers, addPeer, updatePeerRole, removePeer } = usePeers();
+  const { filteredPeers, addPeer, updatePeer, updatePeerRole, removePeer, downloadConfig } = usePeers();
   const { getRuleCountDisplay } = useAccessMatrix();
+
   const [showAddModal, setShowAddModal] = useState(false);
-  const [deletePeer, setDeletePeer] = useState<{ id: string; name: string } | null>(null);
+  const [editPeer, setEditPeer]         = useState<IPeer | null>(null);
+  const [deletePeer, setDeletePeer]     = useState<IPeer | null>(null);
 
   return (
     <>
@@ -74,13 +78,29 @@ export function Clientes() {
                       <span className="peer-time">{peer.lastSeen}</span>
                     </td>
                     <td>
-                      <button
-                        className="peer-delete"
-                        onClick={() => setDeletePeer({ id: peer.id, name: peer.displayName })}
-                        title="Eliminar peer"
-                      >
-                        🗑
-                      </button>
+                      <div className="peer-actions">
+                        <button
+                          className="peer-action-btn"
+                          title="Descargar config WireGuard"
+                          onClick={() => downloadConfig(peer.id, peer.username)}
+                        >
+                          ↓
+                        </button>
+                        <button
+                          className="peer-action-btn"
+                          title="Editar peer"
+                          onClick={() => setEditPeer(peer)}
+                        >
+                          ✎
+                        </button>
+                        <button
+                          className="peer-action-btn peer-action-btn--danger"
+                          title="Eliminar peer"
+                          onClick={() => setDeletePeer(peer)}
+                        >
+                          🗑
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}
@@ -96,13 +116,19 @@ export function Clientes() {
         onSubmit={(dto) => addPeer(dto)}
       />
 
+      <EditPeerModal
+        peer={editPeer}
+        onClose={() => setEditPeer(null)}
+        onSubmit={updatePeer}
+      />
+
       <ConfirmModal
         isOpen={!!deletePeer}
         onClose={() => setDeletePeer(null)}
         onConfirm={() => { if (deletePeer) return removePeer(deletePeer.id); }}
         title="Eliminar peer"
         message="¿Estás seguro de que deseas eliminar el peer"
-        itemName={deletePeer?.name + '?'}
+        itemName={deletePeer?.displayName + '?'}
         confirmLabel="Eliminar"
         danger
       />

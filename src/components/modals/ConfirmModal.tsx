@@ -1,15 +1,17 @@
+import { useState } from 'react';
 import { Modal } from '../ui/Modal';
 import './modals.css';
 
 interface ConfirmModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onConfirm: () => void | Promise<void>;
+  onConfirm: (cascade?: boolean) => void | Promise<void>;
   title: string;
   message: string;
   itemName?: string;
   confirmLabel?: string;
   danger?: boolean;
+  cascadeLabel?: string;
 }
 
 export function ConfirmModal({
@@ -21,9 +23,18 @@ export function ConfirmModal({
   itemName,
   confirmLabel = 'Confirmar',
   danger = false,
+  cascadeLabel,
 }: ConfirmModalProps) {
+  const [cascade, setCascade] = useState(false);
+
   const handleConfirm = async () => {
-    await onConfirm();
+    await onConfirm(cascadeLabel ? cascade : undefined);
+    setCascade(false);
+    onClose();
+  };
+
+  const handleClose = () => {
+    setCascade(false);
     onClose();
   };
 
@@ -31,10 +42,10 @@ export function ConfirmModal({
     <Modal
       title={title}
       isOpen={isOpen}
-      onClose={onClose}
+      onClose={handleClose}
       footer={
         <>
-          <button className="btn btn-ghost" onClick={onClose}>
+          <button className="btn btn-ghost" onClick={handleClose}>
             Cancelar
           </button>
           <button
@@ -49,11 +60,19 @@ export function ConfirmModal({
       <p className="confirm-modal-text">
         {message}
         {itemName && (
-          <>
-            {' '}<span className="confirm-modal-name">{itemName}</span>
-          </>
+          <> <span className="confirm-modal-name">{itemName}</span></>
         )}
       </p>
+      {cascadeLabel && (
+        <label className="confirm-modal-cascade">
+          <input
+            type="checkbox"
+            checked={cascade}
+            onChange={(e) => setCascade(e.target.checked)}
+          />
+          {cascadeLabel}
+        </label>
+      )}
     </Modal>
   );
 }

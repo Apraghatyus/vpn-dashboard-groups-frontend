@@ -41,7 +41,7 @@ export function MatrizAcceso() {
                         <span className="matriz-service-dot" />
                         <div className="matriz-service-info">
                           <span className="matriz-service-name">{svc.name}</span>
-                          <span className="matriz-service-endpoint">{svc.endpoint}</span>
+                          <span className="matriz-service-endpoint">{svc.url ?? svc.endpoint}</span>
                         </div>
                       </div>
                     </td>

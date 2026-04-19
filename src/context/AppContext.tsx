@@ -17,6 +17,7 @@ export interface AppState {
 export type Action =
   | { type: 'SET_PEERS'; payload: IPeer[] }
   | { type: 'ADD_PEER_RESPONSE'; payload: IPeer }
+  | { type: 'UPDATE_PEER'; payload: IPeer }
   | { type: 'REMOVE_PEER'; payload: string }
   | { type: 'UPDATE_PEER_ROLE'; payload: { peerId: string; roleId: string } }
   | { type: 'SET_ROLES'; payload: IRole[] }
@@ -37,6 +38,12 @@ function appReducer(state: AppState, action: Action): AppState {
 
     case 'ADD_PEER_RESPONSE':
       return { ...state, peers: [...state.peers, action.payload] };
+
+    case 'UPDATE_PEER':
+      return {
+        ...state,
+        peers: state.peers.map((p) => p.id === action.payload.id ? action.payload : p),
+      };
 
     case 'REMOVE_PEER':
       return { ...state, peers: state.peers.filter((p) => p.id !== action.payload) };

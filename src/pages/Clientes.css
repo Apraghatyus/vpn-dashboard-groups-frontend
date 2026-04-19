@@ -120,19 +120,30 @@
   color: var(--text-muted);
 }
 
-.peer-delete {
+.peer-actions {
+  display: flex;
+  gap: 2px;
+  justify-content: flex-end;
+}
+
+.peer-action-btn {
   background: none;
   border: none;
   color: var(--text-muted);
   cursor: pointer;
-  padding: 6px;
+  padding: 5px 7px;
   border-radius: 6px;
-  transition: all 0.15s ease;
-  font-size: 1.1rem;
+  transition: background 0.15s ease, color 0.15s ease;
+  font-size: 1rem;
   line-height: 1;
 }
 
-.peer-delete:hover {
+.peer-action-btn:hover {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+}
+
+.peer-action-btn--danger:hover {
   color: #ef4444;
   background: #ef444418;
 }
