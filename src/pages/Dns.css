@@ -1,0 +1,103 @@
+.dns-container {
+  background: var(--surface-light);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 1.5rem;
+}
+
+.dns-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dns-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.dns-subtitle {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+}
+
+.dns-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.dns-table th,
+.dns-table td {
+  padding: 1rem 1.5rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.dns-table th {
+  background: var(--surface-darker);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.dns-table td {
+  font-size: 0.95rem;
+}
+
+.dns-table tr:last-child td {
+  border-bottom: none;
+}
+
+.dns-domain {
+  font-weight: 500;
+  color: var(--text-main);
+}
+
+.dns-type-badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.dns-type-badge.type-a {
+  background: rgba(59, 130, 246, 0.15);
+  color: #3b82f6;
+}
+
+.dns-type-badge.type-cname {
+  background: rgba(245, 158, 11, 0.15);
+  color: #f59e0b;
+}
+
+.dns-answer {
+  font-family: monospace;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  color: var(--text-main);
+}
+
+.dns-sync-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.dns-sync-status.synced {
+  color: #10b981;
+}
+
+.dns-sync-status.pending {
+  color: #f59e0b;
+}

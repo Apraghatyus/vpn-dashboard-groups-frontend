@@ -9,6 +9,8 @@ export interface IPeer {
   status: PeerStatus;
   lastSeen: string;
   createdAt: number;
+  userId?: string;
+  deviceName?: string;
 }
 
 export interface NewPeerDTO {
@@ -16,4 +18,6 @@ export interface NewPeerDTO {
   username: string;
   ip: string;
   roleId: string;
+  userId?: string;
+  deviceName?: string;
 }

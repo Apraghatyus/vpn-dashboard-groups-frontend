@@ -1,4 +1,4 @@
-import type { IPeer, IRole, IService, IAccessEntry } from '../models';
+import type { IPeer, IRole, IService, IAccessEntry, IVpnUser, IDnsRecord } from '../models';
 
 export const MOCK_ROLES: IRole[] = [
   {
@@ -34,13 +34,15 @@ export const MOCK_ROLES: IRole[] = [
 export const MOCK_PEERS: IPeer[] = [
   {
     id: 'peer-1',
-    displayName: 'Juan Camilo · Owner',
-    username: 'apraghato',
+    displayName: 'Juan Camilo · MacBook',
+    username: 'apraghato_mac',
     ip: '10.8.0.2',
     roleId: 'admin',
     status: 'online',
     lastSeen: 'ahora',
     createdAt: Date.now() - 86400000 * 30,
+    userId: 'vpnuser-1',
+    deviceName: 'MacBook Pro'
   },
   {
     id: 'peer-2',
@@ -51,6 +53,8 @@ export const MOCK_PEERS: IPeer[] = [
     status: 'online',
     lastSeen: '2 min',
     createdAt: Date.now() - 86400000 * 25,
+    userId: 'vpnuser-2',
+    deviceName: 'iPhone 14'
   },
   {
     id: 'peer-3',
@@ -61,6 +65,8 @@ export const MOCK_PEERS: IPeer[] = [
     status: 'offline',
     lastSeen: '3h',
     createdAt: Date.now() - 86400000 * 20,
+    userId: 'vpnuser-3',
+    deviceName: 'Smart TV'
   },
   {
     id: 'peer-4',
@@ -71,6 +77,8 @@ export const MOCK_PEERS: IPeer[] = [
     status: 'online',
     lastSeen: 'ahora',
     createdAt: Date.now() - 86400000 * 15,
+    userId: 'vpnuser-4',
+    deviceName: 'Gaming PC'
   },
   {
     id: 'peer-5',
@@ -81,6 +89,8 @@ export const MOCK_PEERS: IPeer[] = [
     status: 'offline',
     lastSeen: '1d',
     createdAt: Date.now() - 86400000 * 5,
+    userId: 'vpnuser-5',
+    deviceName: 'Laptop Oficina'
   },
 ];
 
@@ -122,4 +132,23 @@ export const MOCK_ACCESS_MATRIX: IAccessEntry[] = [
   // cliente_aguaquim
   { roleId: 'cliente_aguaquim', serviceId: 'aguaquim-crm' },
   { roleId: 'cliente_aguaquim', serviceId: 'portainer' },
+];
+
+export const MOCK_VPN_USERS: IVpnUser[] = [
+  { id: 'vpnuser-1', displayName: 'Juan Camilo Cardona', email: 'cardonarealpe@gmail.com', roleId: 'admin', createdAt: Date.now() - 86400000 * 30 },
+  { id: 'vpnuser-2', displayName: 'Camila', email: 'camila@home.local', roleId: 'familia', createdAt: Date.now() - 86400000 * 25 },
+  { id: 'vpnuser-3', displayName: 'Papá', email: 'papa@home.local', roleId: 'familia', createdAt: Date.now() - 86400000 * 20 },
+  { id: 'vpnuser-4', displayName: 'Santi', email: 'santi@home.local', roleId: 'gaming', createdAt: Date.now() - 86400000 * 15 },
+  { id: 'vpnuser-5', displayName: 'Operador Aguaquim', email: 'operador@aguaquim.com', roleId: 'cliente_aguaquim', createdAt: Date.now() - 86400000 * 5 },
+];
+
+export const MOCK_DNS_RECORDS: IDnsRecord[] = [
+  { id: 'dns-1', domain: 'jellyfin.home.local', answer: '100.75.203.14', type: 'A', description: 'Jellyfin', serviceId: 'jellyfin', createdAt: Date.now(), adguardSynced: true },
+  { id: 'dns-2', domain: 'navidrome.home.local', answer: '100.75.203.14', type: 'A', description: 'Navidrome', serviceId: 'navidrome', createdAt: Date.now(), adguardSynced: true },
+  { id: 'dns-3', domain: 'kavita.home.local', answer: '100.75.203.14', type: 'A', description: 'Kavita', serviceId: 'kavita', createdAt: Date.now(), adguardSynced: true },
+  { id: 'dns-4', domain: 'files.home.local', answer: '100.75.203.14', type: 'A', description: 'FileBrowser', serviceId: 'filebrowser', createdAt: Date.now(), adguardSynced: true },
+  { id: 'dns-5', domain: 'portainer.home.local', answer: '100.75.203.14', type: 'A', description: 'Portainer', serviceId: 'portainer', createdAt: Date.now(), adguardSynced: true },
+  { id: 'dns-6', domain: 'crm.home.local', answer: '100.75.203.14', type: 'A', description: 'Aguaquim CRM', serviceId: 'aguaquim-crm', createdAt: Date.now(), adguardSynced: true },
+  { id: 'dns-7', domain: 'dns.home.local', answer: '100.114.140.34', type: 'A', description: 'Pi-hole', serviceId: 'dns-pihole', createdAt: Date.now(), adguardSynced: true },
+  { id: 'dns-8', domain: '*.home.local', answer: '100.75.203.14', type: 'A', description: 'Wildcard', createdAt: Date.now(), adguardSynced: true },
 ];

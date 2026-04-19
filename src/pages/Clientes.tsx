@@ -23,7 +23,7 @@ export function Clientes() {
           <div className="clientes-card">
             <div className="clientes-header">
               <div>
-                <h2>Peers ({filteredPeers.length})</h2>
+                <h2>Equipos ({filteredPeers.length})</h2>
                 <div className="subtitle">Dispositivos autorizados al túnel</div>
               </div>
               <button className="btn btn-primary" onClick={() => setShowAddModal(true)}>
@@ -52,7 +52,9 @@ export function Clientes() {
                         </div>
                         <div className="peer-cell-info">
                           <span className="peer-cell-name">{peer.displayName}</span>
-                          <span className="peer-cell-username">{peer.username}</span>
+                          <span className="peer-cell-username">
+                            {peer.deviceName ? `${peer.deviceName} · ${peer.username}` : peer.username}
+                          </span>
                         </div>
                       </div>
                     </td>

@@ -8,6 +8,8 @@ import { Clientes } from './pages/Clientes';
 import { Roles } from './pages/Roles';
 import { MatrizAcceso } from './pages/MatrizAcceso';
 import { YamlView } from './pages/YamlView';
+import { VpnUsers } from './pages/VpnUsers';
+import { DnsView } from './pages/Dns';
 
 import './App.css';
 import './components/ui/ui.css';
@@ -30,6 +32,8 @@ function ProtectedLayout() {
             <Route path="/roles" element={<Roles />} />
             <Route path="/matriz" element={<MatrizAcceso />} />
             <Route path="/yaml" element={<YamlView />} />
+            <Route path="/usuarios" element={<VpnUsers />} />
+            <Route path="/dns" element={<DnsView />} />
           </Routes>
         </main>
       </div>
