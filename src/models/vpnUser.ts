@@ -1,4 +1,4 @@
-import { IPeer } from './peer';
+import type { IPeer } from './peer';
 
 export interface IVpnUser {
   id: string;

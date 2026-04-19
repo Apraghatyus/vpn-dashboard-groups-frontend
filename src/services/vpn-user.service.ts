@@ -1,6 +1,6 @@
 import type { IVpnUser, IVpnUserWithDevices, NewVpnUserDTO, IPeer } from '../models';
 import { storageService } from './storage.service';
-import { MOCK_VPN_USERS, MOCK_PEERS } from '../data/mockData';
+import { MOCK_VPN_USERS } from '../data/mockData';
 import { peerService } from './peer.service';
 
 const KEY = 'vpn_users';
