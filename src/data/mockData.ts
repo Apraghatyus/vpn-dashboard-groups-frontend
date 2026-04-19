@@ -95,16 +95,16 @@ export const MOCK_PEERS: IPeer[] = [
 ];
 
 export const MOCK_SERVICES: IService[] = [
-  { id: 'jellyfin', name: 'Jellyfin', endpoint: '100.75.203.14:8096', category: 'Media' },
-  { id: 'navidrome', name: 'Navidrome', endpoint: '100.75.203.14:4533', category: 'Media' },
-  { id: 'filebrowser', name: 'FileBrowser', endpoint: '100.75.203.14:8080', category: 'Herramientas' },
-  { id: 'kavita', name: 'Kavita', endpoint: '100.75.203.14:5000', category: 'Media' },
-  { id: 'minecraft-java', name: 'Minecraft Java', endpoint: '100.75.203.14:25565', category: 'Gaming' },
-  { id: 'mc-bedrock', name: 'MC Bedrock', endpoint: '100.75.203.14:19132', category: 'Gaming' },
-  { id: 'terraria', name: 'Terraria', endpoint: '100.75.203.14:7777', category: 'Gaming' },
-  { id: 'aguaquim-crm', name: 'Aguaquim CRM', endpoint: '100.75.203.14:5433', category: 'CRM' },
-  { id: 'portainer', name: 'Portainer', endpoint: '100.75.203.14:9443', category: 'Infraestructura' },
-  { id: 'dns-pihole', name: 'DNS (Pi-hole)', endpoint: '100.114.140.34:53', category: 'Red' },
+  { id: 'jellyfin',       name: 'Jellyfin',       endpoint: '100.75.203.14:8096',  url: 'jellyfin.home.local',  category: 'Media' },
+  { id: 'navidrome',      name: 'Navidrome',      endpoint: '100.75.203.14:4533',  url: 'navidrome.home.local', category: 'Media' },
+  { id: 'filebrowser',    name: 'FileBrowser',    endpoint: '100.75.203.14:8080',  url: 'files.home.local',     category: 'Herramientas' },
+  { id: 'kavita',         name: 'Kavita',         endpoint: '100.75.203.14:5000',  url: 'kavita.home.local',    category: 'Media' },
+  { id: 'minecraft-java', name: 'Minecraft Java', endpoint: '100.75.203.14:25565',                              category: 'Gaming' },
+  { id: 'mc-bedrock',     name: 'MC Bedrock',     endpoint: '100.75.203.14:19132',                              category: 'Gaming' },
+  { id: 'terraria',       name: 'Terraria',       endpoint: '100.75.203.14:7777',                               category: 'Gaming' },
+  { id: 'aguaquim-crm',   name: 'Aguaquim CRM',   endpoint: '100.75.203.14:5433',  url: 'www.aguaquim.com',     category: 'CRM' },
+  { id: 'portainer',      name: 'Portainer',      endpoint: '100.75.203.14:9443',  url: 'portainer.home.local', category: 'Infraestructura' },
+  { id: 'dns-pihole',     name: 'DNS (Pi-hole)',  endpoint: '100.114.140.34:53',   url: 'dns.home.local',       category: 'Red' },
 ];
 
 // Admin has access to ALL services

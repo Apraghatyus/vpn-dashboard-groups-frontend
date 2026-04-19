@@ -17,3 +17,9 @@ export interface NewVpnUserDTO {
   email: string;
   roleId: string;
 }
+
+export interface UpdateVpnUserDTO {
+  displayName?: string;
+  email?: string;
+  roleId?: string;
+}

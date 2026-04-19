@@ -21,6 +21,7 @@ export type Action =
   | { type: 'UPDATE_PEER_ROLE'; payload: { peerId: string; roleId: string } }
   | { type: 'SET_ROLES'; payload: IRole[] }
   | { type: 'ADD_ROLE_RESPONSE'; payload: IRole }
+  | { type: 'UPDATE_ROLE'; payload: IRole }
   | { type: 'REMOVE_ROLE'; payload: string }
   | { type: 'SET_SERVICES'; payload: IService[] }
   | { type: 'SET_ACCESS_MATRIX'; payload: IAccessEntry[] }
@@ -53,6 +54,12 @@ function appReducer(state: AppState, action: Action): AppState {
 
     case 'ADD_ROLE_RESPONSE':
       return { ...state, roles: [...state.roles, action.payload] };
+
+    case 'UPDATE_ROLE':
+      return {
+        ...state,
+        roles: state.roles.map((r) => r.id === action.payload.id ? action.payload : r),
+      };
 
     case 'REMOVE_ROLE':
       return {

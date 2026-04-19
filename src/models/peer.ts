@@ -21,3 +21,12 @@ export interface NewPeerDTO {
   userId?: string;
   deviceName?: string;
 }
+
+export interface UpdatePeerDTO {
+  displayName?: string;
+  username?: string;
+  ip?: string;
+  roleId?: string;
+  userId?: string | null;  // null = desvincula del usuario
+  deviceName?: string;
+}

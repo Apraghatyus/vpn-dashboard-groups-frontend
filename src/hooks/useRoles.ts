@@ -3,6 +3,12 @@ import { useAppContext } from '../context/AppContext';
 import type { IRole, NewRoleDTO } from '../models';
 import { apiFetch } from '../lib/api';
 
+interface UpdateRoleDTO {
+  displayName?: string;
+  description?: string;
+  color?: string;
+}
+
 export function useRoles() {
   const { state, dispatch } = useAppContext();
 
@@ -12,6 +18,14 @@ export function useRoles() {
       body: JSON.stringify(dto),
     });
     dispatch({ type: 'ADD_ROLE_RESPONSE', payload: role });
+  }, [dispatch]);
+
+  const updateRole = useCallback(async (roleId: string, dto: UpdateRoleDTO): Promise<void> => {
+    const role = await apiFetch<IRole>(`/api/roles/${roleId}`, {
+      method: 'PUT',
+      body: JSON.stringify(dto),
+    });
+    dispatch({ type: 'UPDATE_ROLE', payload: role });
   }, [dispatch]);
 
   const removeRole = useCallback(async (roleId: string): Promise<void> => {
@@ -43,6 +57,7 @@ export function useRoles() {
     roles: state.roles,
     filteredRoles,
     addRole,
+    updateRole,
     removeRole,
     getRoleColor,
     getRoleById,

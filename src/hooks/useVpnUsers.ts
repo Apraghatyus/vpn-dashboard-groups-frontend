@@ -1,53 +1,47 @@
 import { useState, useEffect, useCallback } from 'react';
-import { vpnUserService } from '../services';
-import type { IVpnUser, IVpnUserWithDevices, NewVpnUserDTO, IPeer } from '../models';
+import type { IVpnUser, IVpnUserWithDevices, NewVpnUserDTO, UpdateVpnUserDTO } from '../models';
+import { apiFetch } from '../lib/api';
 
 export function useVpnUsers() {
   const [users, setUsers] = useState<IVpnUser[]>([]);
 
-  const loadUsers = useCallback(() => {
-    setUsers(vpnUserService.getAll());
+  const loadUsers = useCallback(async () => {
+    try {
+      const data = await apiFetch<IVpnUser[]>('/api/vpn-users');
+      setUsers(data);
+    } catch (err) {
+      console.error('Error cargando VPN users:', err);
+    }
   }, []);
 
   useEffect(() => {
     loadUsers();
-    // In a real app we might poll or use websockets
-    const interval = setInterval(loadUsers, 5000);
-    return () => clearInterval(interval);
   }, [loadUsers]);
 
-  const addUser = (dto: NewVpnUserDTO) => {
-    try {
-      vpnUserService.create(dto);
-      loadUsers();
-    } catch (err) {
-      console.error(err);
-      throw err;
-    }
-  };
+  const addUser = useCallback(async (dto: NewVpnUserDTO): Promise<void> => {
+    await apiFetch<IVpnUser>('/api/vpn-users', {
+      method: 'POST',
+      body: JSON.stringify(dto),
+    });
+    await loadUsers();
+  }, [loadUsers]);
 
-  const updateUser = (id: string, data: Partial<NewVpnUserDTO>) => {
-    try {
-      vpnUserService.update(id, data);
-      loadUsers();
-    } catch (err) {
-      console.error(err);
-      throw err;
-    }
-  };
+  const updateUser = useCallback(async (id: string, dto: UpdateVpnUserDTO): Promise<void> => {
+    await apiFetch<IVpnUser>(`/api/vpn-users/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(dto),
+    });
+    await loadUsers();
+  }, [loadUsers]);
 
-  const removeUser = (id: string) => {
-    vpnUserService.remove(id);
-    loadUsers();
-  };
+  const removeUser = useCallback(async (id: string, cascade = false): Promise<void> => {
+    await apiFetch<unknown>(`/api/vpn-users/${id}?cascade=${cascade}`, { method: 'DELETE' });
+    await loadUsers();
+  }, [loadUsers]);
 
-  const getUserDetails = (id: string): IVpnUserWithDevices | undefined => {
-    return vpnUserService.getById(id);
-  };
-
-  const getUserDevices = (id: string): IPeer[] => {
-    return vpnUserService.getDevicesByUser(id);
-  };
+  const getUserDetails = useCallback(async (id: string): Promise<IVpnUserWithDevices> => {
+    return apiFetch<IVpnUserWithDevices>(`/api/vpn-users/${id}`);
+  }, []);
 
   return {
     users,
@@ -55,7 +49,6 @@ export function useVpnUsers() {
     updateUser,
     removeUser,
     getUserDetails,
-    getUserDevices,
     refresh: loadUsers,
   };
 }

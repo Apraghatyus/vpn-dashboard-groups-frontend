@@ -197,6 +197,12 @@
   border-color: var(--accent);
 }
 
+.form-hint {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-family: 'JetBrains Mono', monospace;
+}
+
 /* ── Role Dropdown (inline) ── */
 .role-dropdown {
   display: inline-flex;

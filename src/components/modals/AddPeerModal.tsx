@@ -1,25 +1,67 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Modal } from '../ui/Modal';
 import { useRoles } from '../../hooks/useRoles';
+import { useVpnUsers } from '../../hooks/useVpnUsers';
+import type { NewPeerDTO } from '../../models';
 
 interface AddPeerModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (data: { displayName: string; username: string; ip: string; roleId: string }) => Promise<void>;
+  onSubmit: (data: NewPeerDTO) => Promise<void>;
+}
+
+function toSlug(s: string) {
+  return s.toLowerCase().replace(/\s+/g, '_').replace(/[^a-z0-9_]/g, '');
 }
 
 export function AddPeerModal({ isOpen, onClose, onSubmit }: AddPeerModalProps) {
   const { roles } = useRoles();
-  const [displayName, setDisplayName] = useState('');
-  const [username, setUsername] = useState('');
-  const [ip, setIp] = useState('');
-  const [roleId, setRoleId] = useState(roles[0]?.id ?? '');
+  const { users } = useVpnUsers();
+
+  const [userId, setUserId]       = useState('');
+  const [deviceName, setDeviceName] = useState('');
+  const [ip, setIp]               = useState('');
+  const [roleId, setRoleId]       = useState('');
+
+  // Keep roleId in sync with default role
+  useEffect(() => {
+    if (!roleId && roles.length > 0) setRoleId(roles[0].id);
+  }, [roles, roleId]);
+
+  // When user is selected, pre-fill their role
+  useEffect(() => {
+    if (userId) {
+      const user = users.find((u) => u.id === userId);
+      if (user) setRoleId(user.roleId);
+    }
+  }, [userId, users]);
+
+  const selectedUser = users.find((u) => u.id === userId);
+
+  // Auto-generated WireGuard username preview
+  const autoUsername = selectedUser && deviceName
+    ? `${toSlug(selectedUser.displayName)}_${toSlug(deviceName)}`
+    : '';
+
+  // Auto-generated display name
+  const autoDisplayName = selectedUser && deviceName
+    ? `${selectedUser.displayName} · ${deviceName}`
+    : '';
+
+  const canSubmit = userId && deviceName.trim() && ip.trim() && roleId;
 
   const handleSubmit = async () => {
-    if (!displayName.trim() || !username.trim() || !ip.trim()) return;
-    await onSubmit({ displayName: displayName.trim(), username: username.trim(), ip: ip.trim(), roleId });
-    setDisplayName('');
-    setUsername('');
+    if (!canSubmit) return;
+    await onSubmit({
+      displayName: autoDisplayName,
+      username:    autoUsername,
+      ip:          ip.trim(),
+      roleId,
+      userId,
+      deviceName:  deviceName.trim(),
+    });
+    setUserId('');
+    setDeviceName('');
     setIp('');
     setRoleId(roles[0]?.id ?? '');
     onClose();
@@ -35,31 +77,42 @@ export function AddPeerModal({ isOpen, onClose, onSubmit }: AddPeerModalProps) {
           <button className="btn btn-ghost" onClick={onClose}>
             Cancelar
           </button>
-          <button className="btn btn-primary" onClick={handleSubmit}>
+          <button className="btn btn-primary" onClick={handleSubmit} disabled={!canSubmit}>
             Agregar peer
           </button>
         </>
       }
     >
       <div className="form-group">
-        <label>Nombre</label>
-        <input
-          className="form-input"
-          placeholder="Juan Camilo · Owner"
-          value={displayName}
-          onChange={(e) => setDisplayName(e.target.value)}
+        <label>Usuario</label>
+        <select
+          className="form-select"
+          value={userId}
+          onChange={(e) => setUserId(e.target.value)}
           autoFocus
-        />
+        >
+          <option value="">— Seleccionar usuario —</option>
+          {users.map((u) => (
+            <option key={u.id} value={u.id}>
+              {u.displayName} ({u.email})
+            </option>
+          ))}
+        </select>
       </div>
+
       <div className="form-group">
-        <label>Username</label>
+        <label>Dispositivo</label>
         <input
           className="form-input"
-          placeholder="apraghato"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          placeholder="MacBook Pro, iPhone 15, Smart TV…"
+          value={deviceName}
+          onChange={(e) => setDeviceName(e.target.value)}
         />
+        {autoUsername && (
+          <span className="form-hint">ID WireGuard: {autoUsername}</span>
+        )}
       </div>
+
       <div className="form-group">
         <label>Dirección IP</label>
         <input
@@ -69,6 +122,7 @@ export function AddPeerModal({ isOpen, onClose, onSubmit }: AddPeerModalProps) {
           onChange={(e) => setIp(e.target.value)}
         />
       </div>
+
       <div className="form-group">
         <label>Rol</label>
         <select

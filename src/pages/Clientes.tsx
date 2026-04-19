@@ -93,7 +93,7 @@ export function Clientes() {
       <AddPeerModal
         isOpen={showAddModal}
         onClose={() => setShowAddModal(false)}
-        onSubmit={addPeer}
+        onSubmit={(dto) => addPeer(dto)}
       />
 
       <ConfirmModal

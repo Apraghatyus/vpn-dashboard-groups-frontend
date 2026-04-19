@@ -125,6 +125,86 @@
   font-family: 'JetBrains Mono', monospace;
 }
 
+/* ── Action buttons ── */
+.role-action-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 6px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  transition: background 0.15s ease, color 0.15s ease;
+  line-height: 1;
+}
+
+.role-action-btn:hover {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+}
+
+.role-action-btn--danger:hover {
+  background: rgba(239, 68, 68, 0.12);
+  color: #ef4444;
+}
+
+/* ── Services label ── */
+.role-services-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 16px 0 10px;
+}
+
+/* ── Service toggles ── */
+.role-service-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-base);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+  font-family: inherit;
+}
+
+.role-service-toggle:hover {
+  border-color: var(--text-muted);
+}
+
+.role-service-toggle.active {
+  border-color: var(--accent);
+  background: rgba(251, 191, 36, 0.06);
+}
+
+.toggle-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--border);
+  flex-shrink: 0;
+  transition: background 0.15s ease;
+}
+
+.role-service-toggle.active .toggle-dot {
+  background: var(--accent);
+}
+
+.toggle-name {
+  font-size: 0.82rem;
+  color: var(--text-primary);
+}
+
+.toggle-endpoint {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-family: 'JetBrains Mono', monospace;
+}
+
 @keyframes slideDown {
   from {
     opacity: 0;
