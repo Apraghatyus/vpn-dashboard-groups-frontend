@@ -20,7 +20,6 @@ export function AddPeerModal({ isOpen, onClose, onSubmit }: AddPeerModalProps) {
 
   const [userId, setUserId]       = useState('');
   const [deviceName, setDeviceName] = useState('');
-  const [ip, setIp]               = useState('');
   const [roleId, setRoleId]       = useState('');
 
   // Keep roleId in sync with default role
@@ -48,21 +47,19 @@ export function AddPeerModal({ isOpen, onClose, onSubmit }: AddPeerModalProps) {
     ? `${selectedUser.displayName} · ${deviceName}`
     : '';
 
-  const canSubmit = userId && deviceName.trim() && ip.trim() && roleId;
+  const canSubmit = userId && deviceName.trim() && roleId;
 
   const handleSubmit = async () => {
     if (!canSubmit) return;
     await onSubmit({
       displayName: autoDisplayName,
       username:    autoUsername,
-      ip:          ip.trim(),
       roleId,
       userId,
       deviceName:  deviceName.trim(),
     });
     setUserId('');
     setDeviceName('');
-    setIp('');
     setRoleId(roles[0]?.id ?? '');
     onClose();
   };
@@ -113,15 +110,9 @@ export function AddPeerModal({ isOpen, onClose, onSubmit }: AddPeerModalProps) {
         )}
       </div>
 
-      <div className="form-group">
-        <label>Dirección IP</label>
-        <input
-          className="form-input"
-          placeholder="10.8.0.7"
-          value={ip}
-          onChange={(e) => setIp(e.target.value)}
-        />
-      </div>
+      <p className="form-hint">
+        La IP se asigna automáticamente por WG-Easy al crear el peer.
+      </p>
 
       <div className="form-group">
         <label>Rol</label>

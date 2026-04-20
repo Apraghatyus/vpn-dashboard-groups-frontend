@@ -28,14 +28,24 @@ export function usePeers() {
         Authorization: `Bearer ${JSON.parse(localStorage.getItem('wg-acl-auth') ?? '{}')?.token ?? ''}`,
       },
     });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ error: 'unknown' }));
+      throw new Error((err as { message?: string; error?: string }).message ?? (err as { error?: string }).error ?? `HTTP ${res.status}`);
+    }
     const text = await res.text();
     const blob = new Blob([text], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
     a.download = `${username}.conf`;
+    document.body.appendChild(a);
     a.click();
+    a.remove();
     URL.revokeObjectURL(url);
+  }, []);
+
+  const reconcileWgEasy = useCallback(async (): Promise<{ linked: number; orphaned: number; adopted_pending: number }> => {
+    return apiFetch('/api/peers/reconcile-wg-easy', { method: 'POST' });
   }, []);
 
   const removePeer = useCallback(async (peerId: string): Promise<void> => {
@@ -77,5 +87,6 @@ export function usePeers() {
     removePeer,
     updatePeerRole,
     downloadConfig,
+    reconcileWgEasy,
   };
 }

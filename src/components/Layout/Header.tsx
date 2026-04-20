@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { useSearch } from '../../hooks/useSearch';
 import { useAuth } from '../../context/AuthContext';
+import { usePeers } from '../../hooks/usePeers';
 import './Header.css';
 
 interface HeaderProps {
@@ -11,7 +12,10 @@ interface HeaderProps {
 export function Header({ title, subtitle }: HeaderProps) {
   const { searchQuery, setSearch } = useSearch();
   const { token } = useAuth();
+  const { reconcileWgEasy } = usePeers();
   const [syncState, setSyncState] = useState<'idle' | 'syncing' | 'done' | 'error'>('idle');
+  const [reconcileState, setReconcileState] = useState<'idle' | 'running' | 'done' | 'error'>('idle');
+  const [reconcileResult, setReconcileResult] = useState<{ linked: number; orphaned: number; adopted_pending: number } | null>(null);
 
   const handleSync = useCallback(async () => {
     if (!token || syncState === 'syncing') return;
@@ -27,6 +31,20 @@ export function Header({ title, subtitle }: HeaderProps) {
     }
     setTimeout(() => setSyncState('idle'), 3000);
   }, [token, syncState]);
+
+  const handleReconcile = useCallback(async () => {
+    if (reconcileState === 'running') return;
+    setReconcileState('running');
+    setReconcileResult(null);
+    try {
+      const result = await reconcileWgEasy();
+      setReconcileResult(result);
+      setReconcileState('done');
+    } catch {
+      setReconcileState('error');
+    }
+    setTimeout(() => setReconcileState('idle'), 5000);
+  }, [reconcileState, reconcileWgEasy]);
 
   return (
     <header className="header">
@@ -61,6 +79,22 @@ export function Header({ title, subtitle }: HeaderProps) {
           />
           <span className="header-search-shortcut">⌘K</span>
         </div>
+        <button
+          className={`header-sync ${reconcileState}`}
+          onClick={handleReconcile}
+          disabled={reconcileState === 'running'}
+          title={reconcileResult ? `Linked: ${reconcileResult.linked}, Orphaned: ${reconcileResult.orphaned}, Adopted: ${reconcileResult.adopted_pending}` : undefined}
+        >
+          {reconcileState === 'running' ? (
+            <>⟳ Reconciliando...</>
+          ) : reconcileState === 'done' ? (
+            <>✓ Reconciled</>
+          ) : reconcileState === 'error' ? (
+            <>✕ Error</>
+          ) : (
+            <>⇄ Reconcile WG-Easy</>
+          )}
+        </button>
         <button
           className={`header-sync ${syncState}`}
           onClick={handleSync}

@@ -11,12 +11,12 @@ export interface IPeer {
   createdAt: number;
   userId?: string;
   deviceName?: string;
+  hasRealConfig?: boolean;
 }
 
 export interface NewPeerDTO {
   displayName: string;
   username: string;
-  ip: string;
   roleId: string;
   userId?: string;
   deviceName?: string;

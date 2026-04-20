@@ -79,13 +79,22 @@ export function Clientes() {
                     </td>
                     <td>
                       <div className="peer-actions">
-                        <button
-                          className="peer-action-btn"
-                          title="Descargar config WireGuard"
-                          onClick={() => downloadConfig(peer.id, peer.username)}
-                        >
-                          ↓
-                        </button>
+                        {peer.hasRealConfig ? (
+                          <button
+                            className="peer-action-btn"
+                            title="Descargar config WireGuard"
+                            onClick={() => downloadConfig(peer.id, peer.username)}
+                          >
+                            ↓
+                          </button>
+                        ) : (
+                          <span
+                            className="peer-action-btn peer-action-btn--warn"
+                            title="Peer legacy sin claves reales. Usar Reconcile o recrear."
+                          >
+                            ⚠
+                          </span>
+                        )}
                         <button
                           className="peer-action-btn"
                           title="Editar peer"
