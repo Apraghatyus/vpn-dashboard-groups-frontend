@@ -3,7 +3,7 @@ import { Header } from '../components/Layout/Header';
 import './Dns.css';
 
 export function DnsView() {
-  const { records, isSyncing, syncAll } = useDns();
+  const { records, loading, syncAll } = useDns();
 
   return (
     <>
@@ -16,11 +16,11 @@ export function DnsView() {
               <div className="dns-subtitle">Respuestas locales sincronizadas con AdGuard Home</div>
             </div>
             <button 
-              className={`btn btn-primary ${isSyncing ? 'loading' : ''}`} 
+              className={`btn btn-primary ${loading ? 'loading' : ''}`}
               onClick={syncAll}
-              disabled={isSyncing}
+              disabled={loading}
             >
-              {isSyncing ? 'Sincronizando...' : 'Sincronizar en AdGuard'}
+              {loading ? 'Sincronizando...' : 'Sincronizar en AdGuard'}
             </button>
           </div>
           
