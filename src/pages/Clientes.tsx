@@ -122,9 +122,11 @@ export function Clientes() {
       <AddPeerModal
         isOpen={showAddModal}
         onClose={() => setShowAddModal(false)}
-        onSubmit={(dto) => addPeer(dto)}
+        onSubmit={async (dto) => {
+          await addPeer(dto);
+          setShowAddModal(false);
+        }}
       />
-
       <EditPeerModal
         peer={editPeer}
         onClose={() => setEditPeer(null)}
